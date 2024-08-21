@@ -9,12 +9,17 @@ public class EditLocalFoldersView implements View {
     @Override
     public void print() {
         Config config = ConfigReader.readConfig();
-        System.out.println("----------------------------------------------");
-        System.out.println("Backed up local folders:");
-        System.out.println(config.getLocalFolders());
-        System.out.println("d:[path] -> remove folder");
-        System.out.println("a:[path] -> add folder");
-        System.out.println("x-> go back");
+
+        System.out.printf("""
+                ----------------------------------------------
+                Backed up local folders:
+                %s
+                d:[path] -> remove folder
+                a:[path] -> add folder
+                
+                x-> go back
+                """,
+                config.getLocalFolders());
 
         ActionHandler.handleAction(this);
     }

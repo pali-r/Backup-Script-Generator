@@ -10,27 +10,35 @@ public class MainView implements View {
     public void print() {
         Config config = ConfigReader.readConfig();
 
-        System.out.println("----------------------------------------------");
-        System.out.println(">> backed up local folders:");
-        System.out.println(config.getLocalFolders());
-
-        System.out.println("\n>> backup destinations:");
-        System.out.println("Cloud:");
-        System.out.println(config.getBackupDestinationsCloud());
-        System.out.println("Local:");
-        System.out.println(config.getBackupDestinationsLocal());
-
-        System.out.println("\n>> rclone flags:");
-        System.out.println(config.getRcloneFlags());
-
-        System.out.println("\n>> rsync flags:");
-        System.out.println(config.getRsyncFlags());
-
-        System.out.println("\na -> edit local folders to backup");
-        System.out.println("e -> edit backup destinations");
-        System.out.println("c -> configure rclone / rsync flags");
-        System.out.println("g -> generate backup script");
-        System.out.println("x -> exit");
+        System.out.printf("""
+                ----------------------------------------------
+                >> backed up local folders:
+                %s
+                
+                >> backup destinations:
+                Cloud:
+                %s
+                Local:
+                %s
+                
+                >> rclone flags:
+                %s
+                
+                >> rsync flags:
+                %s
+                
+                a -> edit local folders to backup
+                e -> edit backup destinations
+                c -> configure rclone / rsync flags
+                
+                g -> generate backup script
+                x -> exit
+                """,
+                config.getLocalFolders(),
+                config.getBackupDestinationsCloud(),
+                config.getBackupDestinationsLocal(),
+                config.getRcloneFlags(),
+                config.getRsyncFlags());
 
         ActionHandler.handleAction(this);
     }
