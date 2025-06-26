@@ -77,8 +77,9 @@ public class BackupScriptGenerator {
                 config.getLocalFolders().forEach(folder -> {
                     stringBuilder.append("\trsync ")
                             .append(config.getRsyncFlags() + " ")
-                            .append(folder + " ")
-                            .append(folder.substring(folder.lastIndexOf("/") + 1))
+                            .append(folder + " .")
+//                            .append(folder + " ")
+//                            .append(folder.substring(folder.lastIndexOf("/") + 1))
                             .append("\n")
                             .append("\ttest_error_LOCAL\n");
                 });
