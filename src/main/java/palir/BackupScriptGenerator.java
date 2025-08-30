@@ -42,15 +42,22 @@ public class BackupScriptGenerator {
         choices.add("backup locally");
         choices.add("exit");
 
+        stringBuilder.append("choices=\"");
         for (int i = 0; i < choices.size(); i++) {
-            if (i == 0) {
-                stringBuilder.append("choices=\"%s\"".formatted(choices.get(i)));
-            } else {
-                stringBuilder.append("\nchoices+=\"\\n%s\"".formatted(choices.get(i)));
+//            if (i == 0) {
+//                stringBuilder.append("choices=\"%s\"".formatted(choices.get(i)));
+//            } else {
+//                stringBuilder.append("\nchoices+=\"\\n%s\"".formatted(choices.get(i)));
+//            }
+            if (i == choices.size() - 1) {
+                stringBuilder.append("%s\"\n".formatted(choices.get(i)));
+            }
+            else  {
+                stringBuilder.append("%s\n".formatted(choices.get(i)));
             }
         }
 
-        stringBuilder.append("\n\nchosen=$(echo \"$choices\" | fzf --reverse)");
+        stringBuilder.append("\n\nchosen=$(echo -e \"$choices\" | fzf --reverse)");
 
         stringBuilder.append("\n\ncase \"$chosen\" in\n");
         choices.forEach(choice -> {
@@ -72,7 +79,7 @@ public class BackupScriptGenerator {
 
             config.getBackupDestinationsLocal().forEach(destination -> {
                 stringBuilder.append("\t_curDir=${PWD}\n")
-                        .append("\tcd " + destination + "\n");
+                        .append("\tcd \"" + destination + "\"\n");
 
                 config.getLocalFolders().forEach(folder -> {
                     stringBuilder.append("\trsync ")
